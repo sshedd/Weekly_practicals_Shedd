@@ -127,3 +127,22 @@ ggplot(survey_data_no_outliers) +
 
 #The relationship is still not strong. It is statistically significant as the p value is very small. 
   #However, the R squared is still only 41%. I do not know what NAP is, so I am not sure of the relationship to species richness.
+
+lm_yz = lm(y~z, df_wxyz)
+lm_xw = lm(x~w, df_wxyz)
+lm_xy = lm(y~x, df_wxyz)
+summary(lm_xy)
+
+ggplot(df_wxyz, aes(x, y)) + 
+  geom_point() + 
+  geom_parallel_slopes(se=FALSE)
+ggplot(df_wxyz, aes(x, w)) + 
+  geom_point() + 
+  geom_parallel_slopes(se=FALSE)
+ggplot(df_wxyz, aes(y, z)) + 
+  geom_point() + 
+  geom_parallel_slopes(se=FALSE)
+
+pca_wxyz = prcomp(df_wxyz, scale=TRUE)
+pca_wxyz$rotation
+pca_wxyz$sdev^2 / sum(pca_wxyz$sdev^2)
